@@ -51,6 +51,15 @@ class FrontController extends Controller
     /**
      * Menampilkan detail halaman/layanan/portofolio berdasarkan slug.
      */
+
+    public function servicesPortfolio()
+    {
+        $about = Homepage::firstOrCreate(['id' => 1]);
+        $services = Page::latest()->get();
+
+        return view('pages.index', ['page' => Page::first()], compact('about', 'services'));
+    }
+    
     public function showPage($slug)
     {
         $page = Page::where('slug', $slug)->firstOrFail();
@@ -58,21 +67,26 @@ class FrontController extends Controller
         return view('pages.show', compact('page'));
     }
 
-    /**
-     * Memproses pengiriman pesan dari form "Hubungi Kami".
-     */
-    public function sendMessage(Request $request)
+    public function test()
     {
-        $validated = $request->validate([
-            'name'    => 'required|string|max:255',
-            'email'   => 'required|email|max:255',
-            'message' => 'required|string',
-        ]);
-
-        if (class_exists(ContactMessage::class)) {
-            ContactMessage::create($validated);
-        }
-
-        return redirect()->back()->with('success', 'Pesan Anda berhasil dikirim! Kami akan segera menghubungi Anda.');
+        return view('auth.login');
     }
+
+    // /**
+    //  * Memproses pengiriman pesan dari form "Hubungi Kami".
+    //  */
+    // public function sendMessage(Request $request)
+    // {
+    //     $validated = $request->validate([
+    //         'name'    => 'required|string|max:255',
+    //         'email'   => 'required|email|max:255',
+    //         'message' => 'required|string',
+    //     ]);
+
+    //     if (class_exists(ContactMessage::class)) {
+    //         ContactMessage::create($validated);
+    //     }
+
+    //     return redirect()->back()->with('success', 'Pesan Anda berhasil dikirim! Kami akan segera menghubungi Anda.');
+    // }
 }

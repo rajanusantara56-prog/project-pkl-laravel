@@ -3,6 +3,10 @@
 use App\Http\Controllers\Admin\HomepageController;
 use App\Http\Controllers\Admin\PageController;
 use App\Http\Controllers\FrontController;
+use App\Http\Controllers\AboutController;
+use App\Http\Controllers\ServiceController;
+use App\Http\Controllers\PortfolioController;
+use App\Http\Controllers\ContactController;
 use App\Http\Controllers\ProfileController;
 use App\Models\Page;
 use Illuminate\Support\Facades\Route;
@@ -11,11 +15,18 @@ use Illuminate\Support\Facades\Route;
 // Halaman Utama (Landing Page)
 Route::get('/', [FrontController::class, 'index'])->name('home');
 
+// Halaman Khusus About
+Route::get('/about', [AboutController::class, 'index'])->name('about');
+
+// Halaman Khusus Service (Opsional jika ingin halaman terpisah)
+Route::get('/services', [ServiceController::class, 'index'])->name('services');
+Route::get('/servicesportfolio', [FrontController::class, 'servicesPortfolio'])->name('servicesportfolio');
+
 // Halaman Khusus Portofolio (Opsional jika ingin halaman terpisah)
-Route::get('/portfolio', [FrontController::class, 'portfolio'])->name('portfolio');
+Route::get('/portfolio', [PortfolioController::class, 'index'])->name('portfolio');
 
 // Halaman & Process Kontak
-Route::get('/contact', [FrontController::class, 'contact'])->name('contact');
+Route::get('/contact', [ContactController::class, 'index'])->name('contact');
 Route::post('/contact', [FrontController::class, 'sendMessage'])->name('contact.send');
 
 // Halaman Detail Service / Portfolio berdasarkan Slug
@@ -42,11 +53,11 @@ Route::middleware('auth')->group(function () {
 // --- ADMIN PANEL ROUTES ---
 Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () {
 
-    // Manage Single Row Homepage (Raka)
+    // Manage Single Row Homepage
     Route::get('/homepage', [HomepageController::class, 'edit'])->name('homepage.edit');
     Route::put('/homepage', [HomepageController::class, 'update'])->name('homepage.update');
 
-    // Manage Pages / Service & Portfolio (Magfi & Ajas)
+    // Manage Pages / Service & Portfolio
     Route::resource('pages', PageController::class);
 
 });
