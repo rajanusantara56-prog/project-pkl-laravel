@@ -22,7 +22,7 @@
 
         .dark-grid-bg {
             background-color: #080c16;
-            background-image: 
+            background-image:
                 linear-gradient(to right, rgba(255, 255, 255, 0.035) 1px, transparent 1px),
                 linear-gradient(to bottom, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
             background-size: 42px 42px;
@@ -49,13 +49,13 @@
         }
 
         .orb-blue {
-            width: 420px; 
+            width: 420px;
             height: 420px;
             background: radial-gradient(circle, rgba(37, 99, 235, 0.20) 0%, rgba(37, 99, 235, 0) 70%);
         }
 
         .orb-indigo {
-            width: 500px; 
+            width: 500px;
             height: 500px;
             background: radial-gradient(circle, rgba(79, 70, 229, 0.18) 0%, rgba(79, 70, 229, 0) 70%);
         }
@@ -170,7 +170,7 @@
 </head>
 <body class="bg-[#080c16] text-slate-100 antialiased overflow-x-hidden" x-data="{ mobileMenuOpen: false }">
 
-   <!-- NAVBAR PORTFOLIO (LEBIH TERANG & TRANSPARAN) -->
+    <!-- NAVBAR PORTFOLIO -->
     <header class="fixed top-0 left-0 w-full z-50 bg-slate-800/40 backdrop-blur-md border-b border-white/15 transition-all duration-300">
         <nav class="max-w-7xl mx-auto px-6 md:px-12 py-4 flex items-center justify-between">
 
@@ -225,28 +225,6 @@
         </div>
     </header>
 
-            <!-- Mobile Hamburger Button -->
-            <button @click="mobileMenuOpen = !mobileMenuOpen" class="md:hidden p-2 text-slate-300 rounded-lg focus:outline-none">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path x-show="!mobileMenuOpen" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
-                    <path x-show="mobileMenuOpen" x-cloak stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-                </svg>
-            </button>
-        </nav>
-
-        <!-- Mobile Menu Dropdown -->
-        <div x-show="mobileMenuOpen" x-cloak @click.outside="mobileMenuOpen = false" class="md:hidden px-6 py-5 space-y-3 bg-[#0b0f19] border-t border-white/10">
-            <a href="{{ route('home') }}" @click="mobileMenuOpen = false" class="block py-1 text-slate-300 hover:text-white">Home</a>
-            <a href="{{ route('about') }}" @click="mobileMenuOpen = false" class="block py-1 text-slate-300 hover:text-white">Tentang Kami</a>
-            <a href="{{ route('services') }}" @click="mobileMenuOpen = false" class="block py-1 text-slate-300 hover:text-white">Layanan</a>
-            <a href="{{ route('portfolio') }}" @click="mobileMenuOpen = false" class="block py-1 text-white font-semibold">Portfolio</a>
-            <a href="{{ route('contact') }}" @click="mobileMenuOpen = false" class="block py-1 text-slate-300 hover:text-white">Kontak</a>
-            <a href="{{ Route::has('login') ? route('login') : '#' }}" class="block text-center mt-3 px-4 py-2.5 rounded-lg bg-white/10 text-white font-semibold text-xs border border-white/15">
-                Login Admin
-            </a>
-        </div>
-    </header>
-
     <!-- HERO SECTION -->
     <section class="relative min-h-[700px] pt-40 pb-28 dark-grid-bg overflow-hidden">
         <div class="absolute inset-0 bg-gradient-to-b from-blue-950/30 via-transparent to-[#080c16]"></div>
@@ -258,7 +236,7 @@
 
         <div class="relative z-10 max-w-7xl mx-auto px-6 md:px-12">
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-                
+
                 <div class="lg:col-span-8 lg:col-start-3 text-center">
 
                     <div class="fade-up inline-flex items-center gap-2 px-4 py-2 rounded-full glass-badge text-xs font-bold text-blue-300 shadow-lg shadow-blue-900/20">
@@ -270,7 +248,7 @@
                     </div>
 
                     <h1 class="fade-up delay-1 mt-6 text-4xl sm:text-6xl md:text-7xl font-black tracking-tight leading-[1.05]">
-                        Karya Digital 
+                        Karya Digital
                         <span class="block mt-1 text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-indigo-300 to-cyan-400 filter drop-shadow-sm">
                             Unggulan Kami
                         </span>
@@ -346,8 +324,8 @@
                 @forelse($portfolios as $index => $item)
                     <article class="portfolio-card shine glass rounded-3xl p-4 group">
                         <div class="relative h-56 overflow-hidden rounded-2xl bg-slate-900">
-                            @if($item->portfolioImages && $item->portfolioImages->isNotEmpty())
-                                <img src="{{ asset('storage/' . $item->portfolioImages->first()->image) }}" alt="{{ $item->title }}" class="portfolio-image w-full h-full object-cover">
+                            @if($item->image)
+                                <img src="{{ asset('storage/' . $item->image) }}" alt="{{ $item->title }}" class="portfolio-image w-full h-full object-cover">
                             @else
                                 <div class="w-full h-full flex flex-col items-center justify-center text-slate-600 bg-gradient-to-br from-slate-900 to-slate-950">
                                     <svg class="w-12 h-12 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -358,7 +336,7 @@
                             @endif
 
                             <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent"></div>
-                            
+
                             <div class="number-badge absolute top-4 left-4 glass rounded-xl px-3 py-2 text-[10px] font-black text-blue-300">
                                 {{ str_pad($index + 1, 2, '0', STR_PAD_LEFT) }}
                             </div>
